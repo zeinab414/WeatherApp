@@ -15,5 +15,6 @@
     <string name="cloud">Cloud</string>
     <string name="ultraviolet">Ultraviolet</string>
     <string name="visibility">Visibility</string>
+    <string name="title_activity_google_maps">GoogleMapsActivity</string>
 
 </resources>
