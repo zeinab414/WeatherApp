@@ -42,7 +42,7 @@ data class Current(
 //daily
 data class Daily(
 
-    var dt: Int? = null,
+    var dt: Long? = null,
     var sunrise: Int? = null,
     var sunset: Int? = null,
     var moonrise: Int? = null,
@@ -73,10 +73,12 @@ data class FeelsLike(
 
     )
 
+
+
 //hourly
 data class Hourly(
 
-    var dt: Int? = null,
+    var dt: Long? = null,
     var temp: Double? = null,
     var feels_like: Double? = null,
     var pressure: Int? = null,
@@ -142,3 +144,13 @@ data class Weather(
     var icon: String? = null,
 
     )
+@Entity(tableName = "favourite_weather")
+data class FavWeather(
+    var lat: Double? = null,
+    var lon: Double? = null,
+
+    @PrimaryKey
+    @NonNull
+    var city_name:String
+
+)

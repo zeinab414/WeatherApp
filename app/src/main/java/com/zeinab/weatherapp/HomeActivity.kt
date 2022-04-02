@@ -34,6 +34,9 @@ class HomeActivity : AppCompatActivity() {
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var toolbar: Toolbar
+    companion object{
+       var goToAntherFragmement:Int=0
+    }
 
 
 
@@ -45,12 +48,28 @@ class HomeActivity : AppCompatActivity() {
 
 
 
-        val transaction=this.supportFragmentManager.beginTransaction()
+
         var homeFragment=HomeFragment()
         var settingFragment=SettingFragment()
         var favouriteFragment=FavouriteFragment()
-       transaction.replace(R.id.viewLayout,homeFragment).addToBackStack(null).commit()
 
+        if(goToAntherFragmement==0){
+            val transaction=this.supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.viewLayout,homeFragment).addToBackStack(null).commit()
+        }
+
+        if(goToAntherFragmement==1){
+            val bundle: Bundle? = intent.extras
+            val lat: Double = intent.getDoubleExtra("Latitude",0.0)
+            val lon: Double = intent.getDoubleExtra("Longtitude",0.0)
+            val transaction=this.supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.viewLayout,homeFragment).addToBackStack(null)
+            transaction.commit()
+        }
+        if(goToAntherFragmement==2){
+            val transaction=this.supportFragmentManager.beginTransaction()
+            transaction.replace(R.id.viewLayout,favouriteFragment).addToBackStack(null).commit()
+        }
         drawerLayout = findViewById(R.id.drawerLayout)
         navigationView = findViewById(R.id.navView)
         toggle= ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close)
