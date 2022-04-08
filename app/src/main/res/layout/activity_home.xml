@@ -13,7 +13,7 @@
        >
 
 
-        <androidx.fragment.app.FragmentContainerView
+        <fragment
             android:id="@+id/viewLayout"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
@@ -23,12 +23,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-
+            app:defaultNavHost="true"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.038">
 
 
-        </androidx.fragment.app.FragmentContainerView>
+        </fragment>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     <com.google.android.material.navigation.NavigationView
@@ -37,6 +37,7 @@
         android:id="@+id/navView"
         android:layout_gravity="start"
         app:menu="@menu/menu_items"
+
         app:headerLayout="@layout/nav_header"/>
 
 

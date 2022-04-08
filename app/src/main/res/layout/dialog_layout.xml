@@ -27,9 +27,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="Choose "
-                android:textSize="25dp"
-              />
+                android:text="@string/Choose"
+                android:textSize="25dp" />
 
 
             <RadioGroup
@@ -41,13 +40,13 @@
                     android:id="@+id/rbGPS"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="GPS" />
+                    android:text="@string/GPS" />
 
                 <RadioButton
                     android:id="@+id/rbMap"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Map" />
+                    android:text="@string/Map" />
             </RadioGroup>
 
             <Button
@@ -55,8 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                android:text="Ok"
-               />
+                android:text="@android:string/ok" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

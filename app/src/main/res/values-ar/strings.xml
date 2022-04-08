@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">الطقس</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">مرحبا</string>
+    <string name="open">فتح</string>
+    <string name="close">اغلاق</string>
+    <string name="governorate">المحافظة</string>
+    <string name="time">الوقت</string>
+    <string name="date">التاريخ</string>
+    <string name="sky">حالة السماء</string>
+    <string name="temperature">درجة الحرارة</string>
+    <string name="pressure">الضغط</string>
+    <string name="humidity">الرطوبة</string>
+    <string name="wind">رياح</string>
+    <string name="cloud">سحاب</string>
+    <string name="ultraviolet">فوق البنفسجية</string>
+    <string name="visibility">الرؤية</string>
+    <string name="title_activity_google_maps">GoogleMapsActivity</string>
+    <string name="title_activity_my_map">MyMapActivity</string>
+    <string name="Location">الموقع</string>
+    <string name="Language">اللغة</string>
+    <string name="WindSpeed">سرعة الرياح</string>
+    <string name="Notification">الاشعار</string>
+    <string name="GPS">موقع الملاحة العالمي</string>
+    <string name="Map">الخريطة</string>
+    <string name="english">الانجليزية</string>
+    <string name="Arabic">العربية</string>
+    <string name="Celsius">سليزيوم</string>
+    <string name="Kelvin">كليفن</string>
+    <string name="Fahrenheit">الفهرنهايتية</string>
+    <string name="MeterForSec">متر/ثانية</string>
+    <string name="MillForHour">ميل/ساعة</string>
+    <string name="Enable">تفعيل</string>
+    <string name="Disable">ايقاف</string>
+    <string name="Choose">اختر</string>
+    <string name="ok">موافق</string>
+    <string name="DayName">اسم اليوم</string>
+    <string name="Status">الحالة</string>
+    <string name="CountryName">اسم البلد</string>
+    <string name="startDate">تاريخ البداية</string>
+    <string name="endDate">تاريخ النهاية</string>
+    <string name="startTime">وقت البداية</string>
+    <string name="endTime">وقت النهاية</string>
+    <string name="save">حفظ</string>
+</resources>

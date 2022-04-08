@@ -33,11 +33,15 @@ class WeatherViewModel(iRepo: IRepository,var lat:Double,var lon:Double,var appK
         }
     }
 
-    //add to fav
-    fun insertMovie(weather: ResponseModel) {
+    //add  weather
+    fun insertWeather(weather: ResponseModel) {
         viewModelScope.launch(Dispatchers.IO){
             _iRepo.inserWeather(weather)
         }
+    }
+
+    fun getWeather():LiveData<ResponseModel> {
+       return _iRepo.storedWeather
     }
 
     override fun onCleared() {

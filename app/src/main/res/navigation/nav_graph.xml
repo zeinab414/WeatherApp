@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/nav_graph">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    tools:ignore="InvalidNavigation">
+    <fragment
+        android:id="@+id/alert_fragment"
+        android:name="com.zeinab.weatherapp.AlertFragment"
+        tools:layout="@layout/fragment_alert"
+
+        >
+        <action
+            android:id="@+id/alert_makealert_dest"
+            app:destination="@+id/make_alert_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/make_alert_fragment"
+        android:name="com.zeinab.weatherapp.MakeAlertFragment"
+        tools:layout="@layout/fragment_make_alert"
+        >
+        <action
+            android:id="@+id/makealert_alert_dest"
+            app:destination="@+id/alert_fragment" />
+     <!--   <argument
+            android:name="lat"
+            android:defaultValue="0.0"
+            app:argType="double" />
+        <argument
+            android:name="lon"
+            android:defaultValue="0.0"
+            app:argType="double" />
+            -->
+    </fragment>
 
 </navigation>

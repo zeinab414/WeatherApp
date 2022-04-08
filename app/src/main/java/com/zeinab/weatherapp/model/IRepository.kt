@@ -8,9 +8,14 @@ interface IRepository {
 
 
 
-    //room-stored movies
-    val storedWeather: LiveData<List<ResponseModel>>
+    //room-stored Weather
+    val storedWeather: LiveData<ResponseModel>
     fun inserWeather(weather: ResponseModel)
-    fun deleteWeather(weather: ResponseModel)
+
+
+    //fav
+    val storedFavWeather: LiveData<List<FavWeather>>
+    fun inserFavWeather(favWeather: FavWeather)
+    fun deleteFavWeather(favWeather: FavWeather)
 
 }

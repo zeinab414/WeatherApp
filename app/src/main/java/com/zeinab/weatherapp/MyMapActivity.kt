@@ -36,8 +36,10 @@ class MyMapActivity : AppCompatActivity(), OnMapReadyCallback {
     private var fusedLocationProviderClient: FusedLocationProviderClient? = null
     var currentLocation : Location?= null
     var currentMarker: Marker? = null
-    var lat :Double? = null
-    var lon : Double? = null
+    companion object {
+        var lat: Double=0.0
+        var lon: Double=0.0
+    }
     private lateinit var favViewModel: FavViewModel
     private lateinit var favViewModelFactory: FavViewModelFactory
     private lateinit var favWeather: FavWeather
@@ -134,6 +136,9 @@ class MyMapActivity : AppCompatActivity(), OnMapReadyCallback {
             Toast.makeText(this,"success",Toast.LENGTH_LONG).show()
             val i = Intent(this, HomeActivity::class.java)
             startActivity(i)
+        }
+        if(HomeActivity.goToAntherFragmement==3){
+            finish()
         }
     }
 

@@ -1,31 +1,44 @@
 package com.zeinab.weatherapp
 
+import android.app.ActionBar
+import android.content.Context
+import android.content.SharedPreferences
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
+import android.widget.RadioGroup
+import java.util.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [SettingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class SettingFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+ lateinit var rgNotification:RadioGroup
+ lateinit var rgTemp:RadioGroup
+ lateinit var rgWind:RadioGroup
+ lateinit var rgLanguage:RadioGroup
+ lateinit var rgLocation:RadioGroup
+
+ lateinit var radioGPSLocation:RadioButton
+ lateinit var radioMapLocation:RadioButton
+ lateinit var radioEnglishLanguage:RadioButton
+ lateinit var radioArabicLanguage:RadioButton
+ lateinit var radioCelsius:RadioButton
+ lateinit var radioKelvin:RadioButton
+ lateinit var radioFahrenheit:RadioButton
+ lateinit var radioMeter:RadioButton
+ lateinit var radioMill:RadioButton
+ lateinit var radioEnable:RadioButton
+ lateinit var radioDisable:RadioButton
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        loadLocal()
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+
         }
     }
 
@@ -33,26 +46,62 @@ class SettingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_setting, container, false)
+       var v:View=inflater.inflate(R.layout.fragment_setting, container, false)
+        rgNotification=v.findViewById(R.id.rgNotification)
+        rgTemp=v.findViewById(R.id.rgTemp)
+        rgWind=v.findViewById(R.id.rgWind)
+        rgLanguage=v.findViewById(R.id.rgLanguage)
+        rgLocation=v.findViewById(R.id.rgLocation)
+
+        radioGPSLocation=v.findViewById(R.id.radioGPSLocation)
+        radioMapLocation=v.findViewById(R.id.radioMapLocation)
+        radioEnglishLanguage=v.findViewById(R.id.radioEnglishLanguage)
+        radioArabicLanguage=v.findViewById(R.id.radioArabicLanguage)
+        radioCelsius=v.findViewById(R.id.radioCelsius)
+        radioKelvin=v.findViewById(R.id.radioKelvin)
+        radioFahrenheit=v.findViewById(R.id.radioFahrenheit)
+        radioMeter=v.findViewById(R.id.radioMeter)
+        radioMill=v.findViewById(R.id.radioMill)
+        radioEnable=v.findViewById(R.id.radioEnable)
+        radioDisable=v.findViewById(R.id.radioDisable)
+
+        radioEnglishLanguage.setOnClickListener {
+            setLocal("en")
+
+        }
+        radioArabicLanguage.setOnClickListener {
+            setLocal("ar")
+
+        }
+
+        return v
+    }
+
+    private fun setLocal(language: String) {
+        var locale:Locale= Locale(language)
+        Locale.setDefault(locale)
+        var configuration:Configuration=Configuration()
+        configuration.locale=locale
+        resources.updateConfiguration(configuration,resources.displayMetrics)
+        val sharedPreferences: SharedPreferences = requireActivity().getSharedPreferences("Languages",Context.MODE_PRIVATE)
+        val editor:SharedPreferences.Editor =  sharedPreferences.edit()
+        editor.putString("language",language)
+        editor.apply()
+
+    }
+    public fun loadLocal(){
+       var sharedPreferences:SharedPreferences= requireActivity().getSharedPreferences("Languages",Context.MODE_PRIVATE)
+        var languages: String? =sharedPreferences.getString("language","")
+        setLocal(languages!!)
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment SettingFragment.
-         */
-        // TODO: Rename and change types and number of parameters
+
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             SettingFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+
                 }
             }
     }

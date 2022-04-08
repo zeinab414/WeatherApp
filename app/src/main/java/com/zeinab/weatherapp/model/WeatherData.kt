@@ -1,6 +1,7 @@
 package com.zeinab.weatherapp.model
 
 import androidx.annotation.NonNull
+import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
@@ -11,8 +12,8 @@ data class Alerts(
 
     var sender_name: String? = null,
     var event: String? = null,
-    var start: Int? = null,
-    var end: Int? = null,
+    var start: Long? = null,
+    var end: Long? = null,
     var description: String? = null,
     var tags: ArrayList<String> = arrayListOf(),
 
@@ -104,23 +105,21 @@ data class Minutely(
     )
 
 //ResponseModel
-//@Entity(tableName = "weather")
+@Entity(tableName = "weatherData")
 data class ResponseModel(
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    var id:Int,
     var lat: Double? = null,
     var lon: Double? = null,
-    var latLong:String="$lat$lon",
-    var fav:Boolean=false,
     var timezone: String? = null,
     var timezone_offset: Int? = null,
+    @Embedded
     var current: Current? = Current(),
-    var minutely: ArrayList<Minutely> = arrayListOf(),
+   // var minutely: ArrayList<Minutely> = arrayListOf(),
     var hourly: ArrayList<Hourly> = arrayListOf(),
     var daily: ArrayList<Daily> = arrayListOf(),
     var alerts: ArrayList<Alerts> = arrayListOf()
-    //@PrimaryKey
-   // @NonNull
-
-
     )
 
 //temp

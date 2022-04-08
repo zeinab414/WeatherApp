@@ -26,6 +26,10 @@ import androidx.core.app.ActivityCompat
 
 import android.location.LocationManager
 import android.os.Looper
+import androidx.navigation.NavController
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupActionBarWithNavController
 import com.google.android.gms.location.*
 import java.util.*
 
@@ -37,9 +41,6 @@ class HomeActivity : AppCompatActivity() {
     companion object{
        var goToAntherFragmement:Int=0
     }
-
-
-
     //test
     lateinit var toggle:ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,57 +50,75 @@ class HomeActivity : AppCompatActivity() {
 
 
 
+
         var homeFragment=HomeFragment()
         var settingFragment=SettingFragment()
         var favouriteFragment=FavouriteFragment()
+        var alertFragment=AlertFragment()
+
+        drawerLayout = findViewById(R.id.drawerLayout)
+        navigationView = findViewById(R.id.navView)
+        toggle= ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close)
+        drawerLayout.addDrawerListener(toggle)
+        toggle.syncState()
+
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.viewLayout) as NavHostFragment?
+        val navController = navHostFragment!!.navController
+        val navGraph = navHostFragment!!.navController.navInflater.inflate(R.navigation.nav_graph)
+        navGraph.setStartDestination(R.id.alert_fragment)
+        navController.graph = navGraph
+
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        navigationView.setNavigationItemSelectedListener {
+
+            if(it.itemId==R.id.home_item){
+                val transaction=this.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.viewLayout,homeFragment).addToBackStack(null).commit()
+            }
+            else if(it.itemId==R.id.setting_item){
+                val transaction=this.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.viewLayout,settingFragment).addToBackStack(null)
+                transaction.commit()
+            }
+            else if(it.itemId==R.id.fav_item){
+                val transaction=this.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.viewLayout,favouriteFragment).addToBackStack(null)
+                transaction.commit()
+            }
+            else if(it.itemId==R.id.alert_item){
+                val transaction=this.supportFragmentManager.beginTransaction()
+                transaction.replace(R.id.viewLayout,alertFragment).addToBackStack(null)
+                transaction.commit()
+            }
+            true
+        }
 
         if(goToAntherFragmement==0){
             val transaction=this.supportFragmentManager.beginTransaction()
             transaction.replace(R.id.viewLayout,homeFragment).addToBackStack(null).commit()
         }
 
-        if(goToAntherFragmement==1){
+       else if(goToAntherFragmement==1){
             val bundle: Bundle? = intent.extras
             val lat: Double = intent.getDoubleExtra("Latitude",0.0)
             val lon: Double = intent.getDoubleExtra("Longtitude",0.0)
+            var mBundle=Bundle()
+            mBundle.putDouble("lat",lat)
+            mBundle.putDouble("lon",lon)
+            homeFragment.arguments = mBundle
             val transaction=this.supportFragmentManager.beginTransaction()
             transaction.replace(R.id.viewLayout,homeFragment).addToBackStack(null)
             transaction.commit()
         }
-        if(goToAntherFragmement==2){
+       else if(goToAntherFragmement==2){
+
             val transaction=this.supportFragmentManager.beginTransaction()
             transaction.replace(R.id.viewLayout,favouriteFragment).addToBackStack(null).commit()
         }
-        drawerLayout = findViewById(R.id.drawerLayout)
-        navigationView = findViewById(R.id.navView)
-        toggle= ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close)
-        drawerLayout.addDrawerListener(toggle)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        navigationView.setNavigationItemSelectedListener {
 
-            if(it.itemId==R.id.home_item){
-                val transaction=this.supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.viewLayout,homeFragment).addToBackStack(null)
-                transaction.commit()
-            }
-            if(it.itemId==R.id.setting_item){
-                val transaction=this.supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.viewLayout,settingFragment).addToBackStack(null)
-                transaction.commit()
-            }
-            if(it.itemId==R.id.fav_item){
-                val transaction=this.supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.viewLayout,favouriteFragment).addToBackStack(null)
-                transaction.commit()
-            }
-            true
-        }
 
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if(toggle.onOptionsItemSelected(item))
-            return true
-        return super.onOptionsItemSelected(item)
-    }
+
 }
