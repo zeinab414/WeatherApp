@@ -30,6 +30,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.work.OneTimeWorkRequest
 import com.google.android.gms.location.*
 import java.util.*
 
@@ -40,12 +41,15 @@ class HomeActivity : AppCompatActivity() {
     lateinit var toolbar: Toolbar
     companion object{
        var goToAntherFragmement:Int=0
+        lateinit var requests: ArrayList<OneTimeWorkRequest>
+
     }
     //test
     lateinit var toggle:ActionBarDrawerToggle
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
+        requests = ArrayList<OneTimeWorkRequest>()
 
 
 

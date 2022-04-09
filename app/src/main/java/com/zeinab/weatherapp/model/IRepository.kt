@@ -18,4 +18,9 @@ interface IRepository {
     fun inserFavWeather(favWeather: FavWeather)
     fun deleteFavWeather(favWeather: FavWeather)
 
+    //alert
+    val storedAlertWeather: LiveData<List<AlertWeather>>
+    fun inserAlertWeather(alertWeather: AlertWeather)
+    fun deleteAlertWeather(alertWeather: AlertWeather)
+
 }

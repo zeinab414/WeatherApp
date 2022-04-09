@@ -49,5 +49,16 @@ class Repository private constructor(
        // TODO("Not yet implemented")
     }
 
+    override val storedAlertWeather: LiveData<List<AlertWeather>>
+        get() = localSource.getAllStoredAlertWeather
+
+    override fun inserAlertWeather(alertWeather: AlertWeather) {
+       localSource.inserAlerttWeather(alertWeather)
+    }
+
+    override fun deleteAlertWeather(alertWeather: AlertWeather) {
+       localSource.deleteAlertWeather(alertWeather)
+    }
+
 
 }

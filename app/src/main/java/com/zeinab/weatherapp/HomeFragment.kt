@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.content.Context.MODE_PRIVATE
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -99,6 +100,8 @@ class HomeFragment : Fragment() {
         //dialog
         //dialog= Dialog(requireContext())
         //locationDialog()
+        sharedPreferences = requireContext().
+        getSharedPreferences("com.zeinab.weatherapp", MODE_PRIVATE)
 
 
 
@@ -113,8 +116,7 @@ class HomeFragment : Fragment() {
         //start
         internetConnection = InternetConnection(requireContext())
 
-        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE)
-        sharedEditor = sharedPreferences.edit()
+
         //end
         txtDate = v.findViewById(R.id.txtDate)
         txtTime = v.findViewById(R.id.txtTime)
@@ -154,8 +156,15 @@ class HomeFragment : Fragment() {
         daysRecyclerAdapter = DaysRecyclerAdapter()
         daysRecyclerAdapter.notifyDataSetChanged()
         daysRecyclerView.setAdapter(daysRecyclerAdapter)
+       if(isLocationEnabled()==false){
+           val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+           startActivity(intent)
+           RequestPermission()
+       }
+               else{
+            RequestPermission()
+                }
 
-       //if (isItFirestTime() == true) {
             if (internetConnection.checkConnection() == true) {
 
                 dialog = Dialog(requireContext())
@@ -163,11 +172,24 @@ class HomeFragment : Fragment() {
                 if (bundle != null) {
                     latitude = bundle!!.getDouble("lat")
                     longtitude = bundle!!.getDouble("lon")
-                    Toast.makeText(requireContext(), "" + latitude, Toast.LENGTH_LONG).show()
-                    citydData()
-                } else {
+                    sharedPreferences.edit().putString("latitude", latitude.toString()).commit()
+                    sharedPreferences.edit().putString("longtitude", longtitude.toString()).commit()
+                   Toast.makeText(requireContext(), "" + latitude, Toast.LENGTH_LONG).show()
+                citydData()
+               }
+               else {
+                    if(sharedPreferences.getBoolean("firstOne", true)== true) {
+                        locationDialog()
+                    }
+                    else{
+                        latitude = sharedPreferences.getString("latitude", "0.0")!!.toDouble()
+                        longtitude = sharedPreferences.getString("longtitude","0.0")!!.toDouble()
+                        Toast.makeText(requireContext(), "" + latitude, Toast.LENGTH_LONG).show()
+                           citydData()
 
-    locationDialog()
+                    }
+
+
 
 
                 }
@@ -176,29 +198,13 @@ class HomeFragment : Fragment() {
                 citydData()
             }
 
-  /*     } else {
-            latitude = sharedPreferences.getString("latitude", "0.0")!!.toDouble()
-            longtitude = sharedPreferences.getString("longtitude", "0.0")!!.toDouble()
-            Log.i("err", "" + latitude + ";" + longtitude)
-            citydData()
-        }
-*/
 
 
 
         return v
     }
 
-    companion object {
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-    }
 
     private fun locationDialog() {
 
@@ -225,12 +231,7 @@ class HomeFragment : Fragment() {
             startActivity(i)
         }
         dialog.show()
-/*
-        sharedEditor.putString("latitude", latitude.toString())
-        sharedEditor.putString("longtitude", longtitude.toString())
-        sharedEditor.commit()
-        sharedEditor.apply()
-*/
+
     }
 
 
@@ -391,19 +392,15 @@ class HomeFragment : Fragment() {
 
     }
 
-    fun isItFirestTime(): Boolean {
-        var res=false
-        if (sharedPreferences.getBoolean("firstTime", true)) {
-            sharedEditor.putBoolean("firstTime", false)
-            sharedEditor.putString("latitude", latitude.toString())
-            sharedEditor.putString("longtitude", longtitude.toString())
-            sharedEditor.commit()
-           sharedEditor.apply()
-          res = true
-       } else {
-           res= false
+    override fun onStop() {
+        super.onStop()
+
+        if (sharedPreferences.getBoolean("firstOne", true)) {
+            sharedPreferences.edit().putString("latitude", latitude.toString()).commit()
+            sharedPreferences.edit().putString("longtitude", longtitude.toString()).commit()
+            sharedPreferences.edit().putBoolean("firstOne", false).commit();
+
         }
-        return res
     }
 
 

@@ -5,10 +5,11 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import com.zeinab.weatherapp.model.AlertWeather
 import com.zeinab.weatherapp.model.FavWeather
 import com.zeinab.weatherapp.model.ResponseModel
 
-@Database(entities = [ResponseModel::class,FavWeather::class],version = 5)
+@Database(entities = [ResponseModel::class,FavWeather::class,AlertWeather::class],version = 6)
 @TypeConverters(TypeConverterToRoom::class)
 abstract class DatabaseApp: RoomDatabase() {
     abstract fun weatherDAO(): MyWeatherDAO

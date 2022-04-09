@@ -19,10 +19,28 @@ import android.widget.TimePicker
 
 import android.app.TimePickerDialog
 import android.app.TimePickerDialog.OnTimeSetListener
+import android.provider.ContactsContract
 import java.lang.String.format
 import android.text.format.DateFormat
-
-
+import android.util.Log
+import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import com.zeinab.weatherapp.alert.viewmodel.AlertViewModel
+import com.zeinab.weatherapp.alert.viewmodel.AlertViewModelFactory
+import com.zeinab.weatherapp.database.ConcreteLocalSourceClass
+import com.zeinab.weatherapp.favourite.viewmodel.FavViewModel
+import com.zeinab.weatherapp.favourite.viewmodel.FavViewModelFactory
+import com.zeinab.weatherapp.model.AlertWeather
+import com.zeinab.weatherapp.model.FavWeather
+import com.zeinab.weatherapp.model.Repository
+import com.zeinab.weatherapp.network.WeatherClient
+import java.text.ParseException
+import java.text.SimpleDateFormat
+import java.util.concurrent.TimeUnit
 
 
 class MakeAlertFragment : Fragment() {
@@ -33,14 +51,25 @@ lateinit var txtEndDateAlert:TextView
 lateinit var btnChooseLocation:Button
 lateinit var btnSaveAlert:Button
 
+    private lateinit var alertViewModel: AlertViewModel
+    private lateinit var alertViewModelFactory: AlertViewModelFactory
+    private lateinit var alertWeather: AlertWeather
+
     var hour:Int = 0
     var minute:Int = 0
+    var sDay:Int = 0
+    var sMonth:Int = 0
+    var sYear:Int = 0
+    var eDay:Int = 0
+    var eMonth:Int = 0
+    var eYear:Int = 0
+    lateinit var FirstDate:String
+    lateinit var secondDate:String
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
 
-        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -57,10 +86,10 @@ lateinit var btnSaveAlert:Button
          btnChooseLocation=v.findViewById(R.id.btnChooseLocation)
          btnSaveAlert=v.findViewById(R.id.btnSaveAlert)
         txtStartDateAlert.setOnClickListener{
-            setAlertDate(txtStartDateAlert)
+            setAlertStartDate(txtStartDateAlert)
         }
         txtEndDateAlert.setOnClickListener{
-            setAlertDate(txtEndDateAlert)
+            setAlertEndDate(txtEndDateAlert)
         }
         txtStartTimeAlert.setOnClickListener{
             setAlertTime(txtStartTimeAlert)
@@ -75,6 +104,60 @@ lateinit var btnSaveAlert:Button
             startActivity(i)
         }
         btnSaveAlert.setOnClickListener {
+            val inputData = Data.Builder()
+                .putDouble("lat",MyMapActivity.lat)
+                .putDouble("lon",MyMapActivity.lon)
+                .build()
+            val simpleDateFormat = SimpleDateFormat("dd/MM/yyyy")
+            val today = Calendar.getInstance()
+            var startDate = Calendar.getInstance()
+            var endDate = Calendar.getInstance()
+            startDate.set(sYear, sMonth, sDay, hour, minute)
+            endDate.set(eYear, eMonth, eDay, hour, minute)
+            var diffInMinutes = (startDate.timeInMillis - today.timeInMillis) / 60000
+            // diffInMinutes =  diffInMinutes - 44640
+            var d1: Date? = null
+            var d2: Date? = null
+            try {
+                d1 = simpleDateFormat.parse(FirstDate)
+                d2 = simpleDateFormat.parse(secondDate)
+            } catch (e: ParseException) {
+                e.printStackTrace()
+            }
+
+            val differenceInTime = d2!!.time - d1!!.time
+            val diffInDays = differenceInTime / (1000 * 60 * 60 * 24) % 365
+            Log.i("Tagggg","Days: "+diffInDays)
+            Log.i("Tagggg", "diff In Minutes: $diffInMinutes")
+            Log.i("Tagggg", diffInMinutes.toString())
+            var workRequest = OneTimeWorkRequest.Builder(AlertNotificationWorker::class.java)
+                .setInitialDelay(diffInMinutes, TimeUnit.MINUTES)
+                .setInputData(inputData).build()
+
+            if (diffInMinutes > 0) {
+                HomeActivity.requests.add(workRequest)
+                Log.i("Tagggg", "done")
+            }
+            for (i in 1..diffInDays) {
+                val duration = Math.abs(diffInMinutes + 1440 * i)
+                workRequest = OneTimeWorkRequest.Builder(AlertNotificationWorker::class.java)
+                    .setInitialDelay(duration, TimeUnit.MINUTES)
+                    .setInputData(inputData).build()
+                HomeActivity.requests.add(workRequest)
+            }
+            val name = "${MyMapActivity.lat} - ${MyMapActivity.lon}"
+            WorkManager.getInstance().enqueueUniqueWork(name, ExistingWorkPolicy.REPLACE, HomeActivity.requests)
+
+           //save in room
+
+            alertViewModelFactory= AlertViewModelFactory(Repository.getInstance(WeatherClient.getInstance(),
+                ConcreteLocalSourceClass(requireContext()),requireContext()),
+                MyMapActivity.lat!!, MyMapActivity.lon!!,"0406f3883d8b6a4d0cdf992646df99a0")
+            alertViewModel= ViewModelProvider(this,alertViewModelFactory).get(AlertViewModel::class.java)
+            alertWeather= AlertWeather(MyMapActivity.lat, MyMapActivity.lon,FirstDate,secondDate,txtStartTimeAlert.text.toString(),0)
+            alertViewModel.insertAlertWeather(alertWeather)
+            Toast.makeText(requireContext(),"success", Toast.LENGTH_LONG).show()
+
 
             var navController: NavController = Navigation.findNavController(btnSaveAlert)
             var navDirections: NavDirections =MakeAlertFragmentDirections.makealertAlertDest()
@@ -83,29 +166,37 @@ lateinit var btnSaveAlert:Button
         return v
     }
 
-    companion object {
 
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MakeAlertFragment().apply {
-                arguments = Bundle().apply {
-
-                }
-            }
-    }
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private fun setAlertDate(textView:TextView) {
+    private fun setAlertStartDate(textView:TextView) {
         val calendar = Calendar.getInstance()
-        val year = calendar[Calendar.YEAR]
-        val month = calendar[Calendar.MONTH]
-        val day = calendar[Calendar.DAY_OF_MONTH]
+         sYear = calendar[Calendar.YEAR]
+         sMonth = calendar[Calendar.MONTH]
+         sDay = calendar[Calendar.DAY_OF_MONTH]
         val datePickerDialog = DatePickerDialog(
             context!!, { datePicker, year, month, day ->
                 var month = month
                 month = month + 1
-                var date2 = "$day/$month/$year"
-                textView.setText(date2)
-            }, year, month, day
+               FirstDate = "$day/$month/$year"
+                textView.setText(FirstDate)
+            }, sYear, sMonth, sDay
+        )
+        datePickerDialog.datePicker.minDate = calendar.timeInMillis - 1000
+        datePickerDialog.show()
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private fun setAlertEndDate(textView:TextView) {
+        val calendar = Calendar.getInstance()
+         eYear = calendar[Calendar.YEAR]
+         eMonth = calendar[Calendar.MONTH]
+         eDay = calendar[Calendar.DAY_OF_MONTH]
+        val datePickerDialog = DatePickerDialog(
+            context!!, { datePicker, year, month, day ->
+                var month = month
+                month = month + 1
+                secondDate = "$day/$month/$year"
+                textView.setText(secondDate)
+            }, eYear, eMonth, eDay
         )
         datePickerDialog.datePicker.minDate = calendar.timeInMillis - 1000
         datePickerDialog.show()

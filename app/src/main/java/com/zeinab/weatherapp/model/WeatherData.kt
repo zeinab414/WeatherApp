@@ -153,3 +153,15 @@ data class FavWeather(
     var city_name:String
 
 )
+@Entity(tableName = "alert_weather")
+data class AlertWeather(
+    var lat: Double? = null,
+    var lon: Double? = null,
+    var startDate:String?=null,
+    var endDate:String?=null,
+    var starTime:String?=null,
+    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    var id: Int
+
+)
