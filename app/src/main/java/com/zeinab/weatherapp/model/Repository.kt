@@ -23,8 +23,8 @@ class Repository private constructor(
         }
     }
 
-    override suspend fun getAllWeatherData(lat:Double,lon:Double,appKey:String): ResponseModel {
-       return remoteSource.getWeatherFromNetwork(lat,lon,appKey)
+    override suspend fun getAllWeatherData(lat:Double,lon:Double,appKey:String,lang:String): ResponseModel {
+       return remoteSource.getWeatherFromNetwork(lat,lon,appKey,lang)
     }
 
     override val storedWeather: LiveData<ResponseModel>

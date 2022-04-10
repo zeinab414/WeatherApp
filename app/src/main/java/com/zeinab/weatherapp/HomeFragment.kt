@@ -196,7 +196,7 @@ companion object {
                 }
             } else {
                 Toast.makeText(requireContext(), "no internet", Toast.LENGTH_LONG).show()
-                citydData()
+
             }
 
 
@@ -352,10 +352,11 @@ companion object {
             WeatherClient.getInstance(),
             ConcreteLocalSourceClass(requireContext()),
             requireContext()
-        ), latitude!!, longtitude!!, "0406f3883d8b6a4d0cdf992646df99a0")
+        ), latitude!!, longtitude!!, "0406f3883d8b6a4d0cdf992646df99a0",
+            sharedPreferences.getString("weatherLanguage","en")!!)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(WeatherViewModel::class.java)
-        if (internetConnection.checkConnection() == true) {
+
             viewModel.getAllWeather()
             //Observe exposed data of viewModel
             viewModel.onlineWeather.observe(this) { weathers ->
@@ -404,12 +405,11 @@ companion object {
                 if (weathers != null) {
                     hoursRecyclerAdapter.setHourlyData(requireContext(), weathers[0].hourly)
                     daysRecyclerAdapter.setDailyData(requireContext(), weathers[0].daily)
-                   // viewModel.insertWeather(weathers[0])
+                    viewModel.insertWeather(weathers[0])
                     Log.i("saved",""+viewModel.getWeather().value)
                 }
             }
-        }
-        else{}
+
 
     }
 

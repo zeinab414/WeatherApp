@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 
 interface IRepository {
     //from network
-    suspend fun getAllWeatherData(lat:Double,lon:Double,appKey:String):ResponseModel
+    suspend fun getAllWeatherData(lat:Double,lon:Double,appKey:String,lang:String):ResponseModel
 
 
 

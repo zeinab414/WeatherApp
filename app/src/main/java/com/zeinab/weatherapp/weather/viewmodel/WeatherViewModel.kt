@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class WeatherViewModel(iRepo: IRepository,var lat:Double,var lon:Double,var appKey:String): ViewModel() {
+class WeatherViewModel(iRepo: IRepository,var lat:Double,var lon:Double,var appKey:String,var lang:String): ViewModel() {
     private val _iRepo: IRepository = iRepo
     private val _weatherList = MutableLiveData<List<ResponseModel>>()
 
@@ -25,7 +25,7 @@ class WeatherViewModel(iRepo: IRepository,var lat:Double,var lon:Double,var appK
 
     fun getAllWeather(){
         viewModelScope.launch{
-            val weathers = _iRepo.getAllWeatherData(lat,lon,appKey)
+            val weathers = _iRepo.getAllWeatherData(lat,lon,appKey,lang)
             withContext(Dispatchers.Main){
 
                 _weatherList.postValue(listOf(weathers))

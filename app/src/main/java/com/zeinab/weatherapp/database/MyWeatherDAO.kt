@@ -18,10 +18,7 @@ interface MyWeatherDAO {
     fun delete(favWeather: FavWeather)
 
 
-    @get:Query("SELECT * From weatherData ORDER BY id DESC LIMIT 1")
-    val weatherInfo: LiveData<ResponseModel>
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertAllWeatherInfo(responseModel:ResponseModel)
+
 
     //alert
     @get:Query("SELECT * From alert_weather")

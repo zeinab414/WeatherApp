@@ -53,6 +53,7 @@ class SettingFragment : Fragment() {
     var longtitude: Double = 0.0
     var weatherTemperature=""
      var weatherVis=""
+    var weatherLanguage=""
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,12 +91,14 @@ class SettingFragment : Fragment() {
         radioEnglishLanguage.setOnClickListener {
             setLocal("en")
             loadLocal()
+            weatherLanguage="en"
 
 
         }
         radioArabicLanguage.setOnClickListener {
             setLocal("ar")
             loadLocal()
+            weatherLanguage="ar"
 
         }
         radioGPSLocation.setOnClickListener {
@@ -264,6 +267,10 @@ if(weatherTemperature!="") {
             .putString("weatherVis", weatherVis).commit()
     }
 
+        if(weatherLanguage!="") {
+            HomeFragment.sharedPreferences.edit()
+                .putString("weatherLanguage", weatherLanguage).commit()
+        }
 
 }
 

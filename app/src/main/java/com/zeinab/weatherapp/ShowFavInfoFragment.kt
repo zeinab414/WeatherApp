@@ -9,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.zeinab.weatherapp.HomeFragment.Companion.sharedPreferences
 import com.zeinab.weatherapp.database.ConcreteLocalSourceClass
 import com.zeinab.weatherapp.model.Repository
 import com.zeinab.weatherapp.network.WeatherClient
@@ -100,8 +102,13 @@ class ShowFavInfoFragment : Fragment() {
         daysFavRecyclerAdapter = DaysRecyclerAdapter()
         daysFavRecyclerAdapter.notifyDataSetChanged()
         daysFavRecyclerView.setAdapter(daysFavRecyclerAdapter)
-
+    if(internetConnection.checkConnection()==true){
         citydData()
+    }
+            else{
+                Toast.makeText(requireContext(),"No internet",Toast.LENGTH_LONG).show()
+            }
+
         return v
     }
 
@@ -134,7 +141,8 @@ class ShowFavInfoFragment : Fragment() {
             WeatherClient.getInstance(),
             ConcreteLocalSourceClass(requireContext()),
             requireContext()
-        ), latitude!!, longtitude!!, "0406f3883d8b6a4d0cdf992646df99a0")
+        ), latitude!!, longtitude!!, "0406f3883d8b6a4d0cdf992646df99a0",
+                sharedPreferences.getString("weatherLanguage","en")!!)
 
         viewModel = ViewModelProvider(this, viewModelFactory).get(WeatherViewModel::class.java)
         if (internetConnection.checkConnection() == true) {

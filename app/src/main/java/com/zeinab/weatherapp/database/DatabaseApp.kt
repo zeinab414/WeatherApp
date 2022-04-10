@@ -9,10 +9,11 @@ import com.zeinab.weatherapp.model.AlertWeather
 import com.zeinab.weatherapp.model.FavWeather
 import com.zeinab.weatherapp.model.ResponseModel
 
-@Database(entities = [ResponseModel::class,FavWeather::class,AlertWeather::class],version = 6)
+@Database(entities = [ResponseModel::class,FavWeather::class,AlertWeather::class],version = 7)
 @TypeConverters(TypeConverterToRoom::class)
 abstract class DatabaseApp: RoomDatabase() {
     abstract fun weatherDAO(): MyWeatherDAO
+    abstract fun resposeModelDAO(): ResposeModelDao
     companion object {
         private var INSTANCE: DatabaseApp? = null
         //one thread at a time to access this method

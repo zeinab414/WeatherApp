@@ -9,6 +9,7 @@ import com.zeinab.weatherapp.model.ResponseModel
 
 class ConcreteLocalSourceClass(context: Context):LocalSource {
     private val dao: MyWeatherDAO?
+    private val dao2: ResposeModelDao?
     override val getAllStoredFavWeather: LiveData<List<FavWeather>>
     override val getAllStoredWeatherInfo: LiveData<ResponseModel>
     override val getAllStoredAlertWeather: LiveData<List<AlertWeather>>
@@ -18,8 +19,9 @@ class ConcreteLocalSourceClass(context: Context):LocalSource {
     init {
         val  db:DatabaseApp= DatabaseApp.getInstance(context)
         dao=db.weatherDAO()
+        dao2=db.resposeModelDAO()
         getAllStoredFavWeather=dao.favWeather
-        getAllStoredWeatherInfo=dao.weatherInfo
+        getAllStoredWeatherInfo=dao2.weatherInfo
         getAllStoredAlertWeather=dao.alertWeather
     }
 
@@ -31,7 +33,7 @@ class ConcreteLocalSourceClass(context: Context):LocalSource {
         dao?.delete(weatherItem)
     }
     override fun insertWeatherInfo(weatherItem: ResponseModel) {
-        dao?.insertAllWeatherInfo(weatherItem)
+        dao2?.insertAllWeatherInfo(weatherItem)
     }
 
     override fun inserAlerttWeather(weatherItem: AlertWeather) {

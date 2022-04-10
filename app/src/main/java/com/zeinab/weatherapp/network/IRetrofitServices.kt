@@ -9,7 +9,8 @@ interface IRetrofitServices {
     suspend fun getWeather(
         @Query("lat") lat:Double,
         @Query("lon") lon:Double,
-        @Query("appid") appID:String
+        @Query("appid") appID:String,
+        @Query("lang")lang:String
     ):ResponseModel
 
 }
