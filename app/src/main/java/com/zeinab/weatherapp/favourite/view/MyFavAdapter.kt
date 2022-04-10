@@ -6,9 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
+import androidx.navigation.NavController
+import androidx.navigation.NavDirections
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.zeinab.weatherapp.R
+import com.zeinab.weatherapp.*
 import com.zeinab.weatherapp.model.Daily
 import com.zeinab.weatherapp.model.FavWeather
 import com.zeinab.weatherapp.weather.view.DaysRecyclerAdapter
@@ -16,7 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class MyFavAdapter(private val listner:OnClickDeleteListner):
+class MyFavAdapter(private val listner:OnClickDeleteListner,var iCommunicator: ICommunicator):
     RecyclerView.Adapter<MyFavAdapter.ViewHolder>()  {
     var favWeather: List<FavWeather> = ArrayList<FavWeather>()
     lateinit var context: Context
@@ -38,6 +42,9 @@ class MyFavAdapter(private val listner:OnClickDeleteListner):
         holder.deleteImg.setOnClickListener {
              listner.onClick(favWeather[position])
         }
+        holder.FavCardView.setOnClickListener{
+            iCommunicator.goToAntherFragment(favWeather[position].lat!!, favWeather[position].lon!!)
+        }
 
 
 
@@ -48,10 +55,10 @@ class MyFavAdapter(private val listner:OnClickDeleteListner):
 
         var deleteImg: ImageView = itemView.findViewById(R.id.deleteImg)
         var txtFavCountry: TextView = itemView.findViewById(R.id.txtFavCountry)
+        var FavCardView:CardView=itemView.findViewById(R.id.FavCardView)
 
 
 
-        // var layout: CardView = itemView.findViewById(R.id.dayCardView)
     }
 
 }

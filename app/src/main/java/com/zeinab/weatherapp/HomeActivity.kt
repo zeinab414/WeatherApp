@@ -35,13 +35,14 @@ import com.google.android.gms.location.*
 import java.util.*
 
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() ,ICommunicator{
     lateinit var drawerLayout: DrawerLayout
     lateinit var navigationView: NavigationView
     lateinit var toolbar: Toolbar
     companion object{
        var goToAntherFragmement:Int=0
         lateinit var requests: ArrayList<OneTimeWorkRequest>
+        var destinationID=0
 
     }
     //test
@@ -65,6 +66,7 @@ class HomeActivity : AppCompatActivity() {
         toggle= ActionBarDrawerToggle(this,drawerLayout,R.string.open,R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
+
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.viewLayout) as NavHostFragment?
         val navController = navHostFragment!!.navController
@@ -121,6 +123,18 @@ class HomeActivity : AppCompatActivity() {
             transaction.replace(R.id.viewLayout,favouriteFragment).addToBackStack(null).commit()
         }
 
+
+    }
+
+    override fun goToAntherFragment(lat: Double, lon: Double) {
+        val bundle = Bundle()
+        bundle.putDouble("lat",lat)
+        bundle.putDouble("lon",lon)
+        val transaction=this.supportFragmentManager.beginTransaction()
+        val showFavInfoFragment=ShowFavInfoFragment()
+        showFavInfoFragment.arguments=bundle
+        transaction.replace(R.id.viewLayout,showFavInfoFragment).addToBackStack(null)
+        transaction.commit()
 
     }
 

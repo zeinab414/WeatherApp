@@ -13,6 +13,7 @@
         <action
             android:id="@+id/alert_makealert_dest"
             app:destination="@+id/make_alert_fragment" />
+
     </fragment>
     <fragment
         android:id="@+id/make_alert_fragment"
@@ -22,15 +23,23 @@
         <action
             android:id="@+id/makealert_alert_dest"
             app:destination="@+id/alert_fragment" />
-     <!--   <argument
-            android:name="lat"
-            android:defaultValue="0.0"
-            app:argType="double" />
-        <argument
-            android:name="lon"
-            android:defaultValue="0.0"
-            app:argType="double" />
-            -->
+
     </fragment>
 
+    <fragment
+        android:id="@+id/fav_fragment"
+        android:name="com.zeinab.weatherapp.FavouriteFragment"
+        tools:layout="@layout/fragment_favourite"
+        >
+        <action
+            android:id="@+id/fav_showfav_dest"
+            app:destination="@+id/show_fav_info_fragment" />
+
+
+    </fragment>
+    <fragment
+        android:id="@+id/show_fav_info_fragment"
+        android:name="com.zeinab.weatherapp.ShowFavInfoFragment"
+        tools:layout="@layout/fragment_show_fav_info"
+        ></fragment>
 </navigation>

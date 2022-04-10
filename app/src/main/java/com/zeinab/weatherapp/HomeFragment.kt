@@ -87,9 +87,10 @@ class HomeFragment : Fragment() {
 
     var latitude: Double = 0.0
     var longtitude: Double = 0.0
-
+companion object {
     lateinit var sharedPreferences: SharedPreferences
-    lateinit var sharedEditor: SharedPreferences.Editor
+}
+
 
 
 
@@ -362,8 +363,19 @@ class HomeFragment : Fragment() {
                 Log.i("TAG", "onCreate: ${weathers.toString()}")
                 txtDate.text = allDate
                 txtTime.text = allTime
-                var c = (weathers[0].current?.temp!! - 273.15).toInt()
-                txtCurrentTemp.text = "${c.toString()} \u2103"
+                if (sharedPreferences.getString("weatherTemperature", "") == "Celsius"
+                    || sharedPreferences.getString("weatherTemperature", "") == ""
+                ) {
+                    var c = (weathers[0].current?.temp!! - 273.15).toInt()
+                    txtCurrentTemp.text = "${c.toString()} \u2103"
+                } else if (sharedPreferences.getString("weatherTemperature", "") == "Fahrenheit") {
+                    var f =
+                        "${(((weathers[0].current?.temp!! - 273.15) * (9 / 5)) + 32).toInt()} \u2109"
+                    txtCurrentTemp.text = "$f"
+                } else if (sharedPreferences.getString("weatherTemperature", "") == "Kelvin") {
+                    var kel = weathers[0].current?.temp
+                    txtCurrentTemp.text = "$kel K"
+                }
                 txtCloudStatus.text =
                     "${weathers[0].current?.weather?.get(0)?.description.toString()}"
 
@@ -372,7 +384,16 @@ class HomeFragment : Fragment() {
                 txtWind.text = "${weathers[0].current?.wind_speed.toString()} m/s"
                 txtCloud.text = "${weathers[0].current?.clouds.toString()} %"
                 txtUltra.text = "${weathers[0].current?.uvi.toString()} "
-                txtVisibility.text = "${weathers[0].current?.visibility.toString()} m"
+                if (sharedPreferences.getString("weatherVis", "") == "meter"
+                    || sharedPreferences.getString("weatherVis", "") == ""
+                ){
+                    txtVisibility.text = "${weathers[0].current?.visibility.toString()} m/s"
+            }
+                else   if (sharedPreferences.getString("weatherVis", "") == "mill"){
+                    var visInMill= weathers[0].current?.visibility!! *2.236936
+                    txtVisibility.text = "${visInMill.toString()} mills/h"
+                }
+
                 var myIcon =
                     "https://openweathermap.org/img/w/${weathers[0].current?.weather?.get(0)?.icon}.png"
 

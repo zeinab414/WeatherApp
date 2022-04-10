@@ -24,6 +24,7 @@ import com.zeinab.weatherapp.weather.view.HoursRecyclerAdapter
 
 
 class FavouriteFragment : Fragment(),OnClickDeleteListner{
+    private lateinit var iCommunicator: ICommunicator
     private lateinit var favViewModel: FavViewModel
     private lateinit var favViewModelFactory: FavViewModelFactory
     private lateinit var favWeather: FavWeather
@@ -50,13 +51,13 @@ class FavouriteFragment : Fragment(),OnClickDeleteListner{
             val i = Intent(requireContext(), MyMapActivity::class.java)
             startActivity(i)
         }
-
+        iCommunicator=activity as ICommunicator
         favRecyclerView=v.findViewById(R.id.favRecyclerView)
         favLinearLayoutManager=LinearLayoutManager(requireContext())
         favLinearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL)
         favRecyclerView.setLayoutManager(favLinearLayoutManager)
 
-        favRecyclerAdapter= MyFavAdapter(this)
+        favRecyclerAdapter= MyFavAdapter(this,iCommunicator)
         favRecyclerAdapter.notifyDataSetChanged()
         favRecyclerView.setAdapter(favRecyclerAdapter)
         favViewModelFactory= FavViewModelFactory(Repository.getInstance(WeatherClient.getInstance(),

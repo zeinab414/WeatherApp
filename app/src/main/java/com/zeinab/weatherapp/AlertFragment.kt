@@ -36,6 +36,8 @@ class AlertFragment : Fragment(),OnClickDeleteListnerAlert {
     lateinit var alertRecyclerAdapter: MyAlertAdapter
     lateinit var alertLinearLayoutManager: LinearLayoutManager
 
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -52,8 +54,7 @@ class AlertFragment : Fragment(),OnClickDeleteListnerAlert {
         var addAlertBtn: FloatingActionButton =v.findViewById(R.id.addAlertBtn)
 
         addAlertBtn.setOnClickListener {
-
-
+            HomeActivity.destinationID=1
             var navController:NavController=Navigation.findNavController(addAlertBtn)
             var navDirections:NavDirections=AlertFragmentDirections.alertMakealertDest()
             navController.navigate(navDirections)

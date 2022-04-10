@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.zeinab.weatherapp.HomeFragment
 import com.zeinab.weatherapp.R
 import com.zeinab.weatherapp.model.Hourly
 import java.text.SimpleDateFormat
@@ -37,9 +38,24 @@ class HoursRecyclerAdapter:
         var sdf = SimpleDateFormat("hh a")
         var dateFormate= Date(hours[position].dt!!*1000)
         var hourOfDay = sdf.format(dateFormate)
-        var c=(hours[position].temp!!-273.15).toInt()
 
-        holder.hourTemp.text="${c.toString()} ℃"
+
+        if(HomeFragment.sharedPreferences.getString("weatherTemperature", "")=="Celsius"
+            || HomeFragment.sharedPreferences.getString("weatherTemperature", "")=="" ) {
+            var c=(hours[position].temp!!-273.15).toInt()
+            holder.hourTemp.text="${c.toString()} ℃"
+        }
+        else if(HomeFragment.sharedPreferences.getString("weatherTemperature", "")=="Fahrenheit"){
+            var c=(((hours[position].temp!!-273.15) * (9 / 5)) + 32).toInt()
+            holder.hourTemp.text="${c.toString()} ℉"
+
+
+        }
+        else if(HomeFragment.sharedPreferences.getString("weatherTemperature", "")=="Kelvin"){
+            var c=hours[position].temp!!
+            holder.hourTemp.text="${c.toString()} K"
+        }
+
         holder.hourTime.text=hourOfDay
         var myIcon = "https://openweathermap.org/img/w/${hours[position].weather[0].icon}.png"
         Glide.with(context).load(myIcon)

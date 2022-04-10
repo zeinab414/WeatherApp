@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.zeinab.weatherapp.HomeFragment
 import com.zeinab.weatherapp.R
 import com.zeinab.weatherapp.model.Daily
 import java.text.SimpleDateFormat
@@ -38,10 +39,28 @@ class DaysRecyclerAdapter :
         var dayOfWeakName = sdf.format(dateFormate)
         //holder.dayCloudImg.setImageResource(days[0].weather.get(0).icon!!.toInt())
         holder.txtDayDesc.text="${days[position].weather.get(0).description.toString()}"
+        if(HomeFragment.sharedPreferences.getString("weatherTemperature", "")=="Celsius"
+            || HomeFragment.sharedPreferences.getString("weatherTemperature", "")=="" ) {
+
+            var cMax=(days[position].temp?.max!!-273.15).toInt()
+            var cMin=(days[position].temp?.min!!-273.15).toInt()
+            holder.txtDayTemp.text="${cMax.toString()}/${cMin.toString()} ℃"
+        }
+        else if(HomeFragment.sharedPreferences.getString("weatherTemperature", "")=="Fahrenheit"){
+
+
+            var cMax=(((days[position].temp?.max!!-273.15) * (9 / 5)) + 32).toInt()
+            var cMin=(((days[position].temp?.min!!-273.15) * (9 / 5)) + 32).toInt()
+            holder.txtDayTemp.text="${cMax.toString()}/${cMin.toString()} ℉"
+        }
+        else if(HomeFragment.sharedPreferences.getString("weatherTemperature", "")=="Kelvin"){
+            var cMax=days[position].temp?.max
+            var cMin=days[position].temp?.min
+            holder.txtDayTemp.text="${cMax.toString()}/${cMin.toString()} K"
+        }
+
         //kelvin to culsuim
-        var cMax=(days[position].temp?.max!!-273.15).toInt()
-        var cMin=(days[position].temp?.min!!-273.15).toInt()
-        holder.txtDayTemp.text="${cMax.toString()}/${cMin.toString()} ℃"
+
         holder.txtdayName.text=dayOfWeakName
 
         var myIcon = "https://openweathermap.org/img/w/${days[position].weather[0].icon}.png"

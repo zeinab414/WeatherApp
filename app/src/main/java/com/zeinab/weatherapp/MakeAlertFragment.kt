@@ -158,7 +158,7 @@ lateinit var btnSaveAlert:Button
             alertViewModel.insertAlertWeather(alertWeather)
             Toast.makeText(requireContext(),"success", Toast.LENGTH_LONG).show()
 
-
+            HomeActivity.destinationID=1
             var navController: NavController = Navigation.findNavController(btnSaveAlert)
             var navDirections: NavDirections =MakeAlertFragmentDirections.makealertAlertDest()
             navController.navigate(navDirections)

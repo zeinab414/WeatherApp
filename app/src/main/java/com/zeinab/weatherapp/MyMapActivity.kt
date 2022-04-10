@@ -140,6 +140,9 @@ class MyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         if(HomeActivity.goToAntherFragmement==3){
             finish()
         }
+        if(HomeActivity.goToAntherFragmement==4){
+            finish()
+        }
     }
 
     private fun getAddress(lat:Double, lon: Double): String?{
@@ -147,4 +150,16 @@ class MyMapActivity : AppCompatActivity(), OnMapReadyCallback {
         val address = geocoder.getFromLocation(lat,lon,1)
         return address[0].getAddressLine(0).toString()
     }
+    override fun onStop() {
+        super.onStop()
+        if(lat!=0.0 && lon!=0.0) {
+            HomeFragment.sharedPreferences.edit().putString("latitude", lat.toString()).commit()
+            HomeFragment.sharedPreferences.edit().putString("longtitude", lon.toString()).commit()
+
+        }
+
+
+
+    }
+
 }
