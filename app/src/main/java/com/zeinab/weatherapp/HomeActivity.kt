@@ -68,11 +68,7 @@ class HomeActivity : AppCompatActivity() ,ICommunicator{
         toggle.syncState()
 
 
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.viewLayout) as NavHostFragment?
-        val navController = navHostFragment!!.navController
-        val navGraph = navHostFragment!!.navController.navInflater.inflate(R.navigation.nav_graph)
-        navGraph.setStartDestination(R.id.alert_fragment)
-        navController.graph = navGraph
+
 
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -81,21 +77,25 @@ class HomeActivity : AppCompatActivity() ,ICommunicator{
             if(it.itemId==R.id.home_item){
                 val transaction=this.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.viewLayout,homeFragment).addToBackStack(null).commit()
+           drawerLayout.closeDrawers()
             }
             else if(it.itemId==R.id.setting_item){
                 val transaction=this.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.viewLayout,settingFragment).addToBackStack(null)
                 transaction.commit()
+                drawerLayout.closeDrawers()
             }
             else if(it.itemId==R.id.fav_item){
                 val transaction=this.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.viewLayout,favouriteFragment).addToBackStack(null)
                 transaction.commit()
+                drawerLayout.closeDrawers()
             }
             else if(it.itemId==R.id.alert_item){
                 val transaction=this.supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.viewLayout,alertFragment).addToBackStack(null)
                 transaction.commit()
+                drawerLayout.closeDrawers()
             }
             true
         }
@@ -123,7 +123,11 @@ class HomeActivity : AppCompatActivity() ,ICommunicator{
             transaction.replace(R.id.viewLayout,favouriteFragment).addToBackStack(null).commit()
         }
 
-
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.viewLayout) as NavHostFragment?
+        val navController = navHostFragment!!.navController
+        val navGraph = navHostFragment!!.navController.navInflater.inflate(R.navigation.nav_graph)
+        navGraph.setStartDestination(R.id.alert_fragment)
+        navController.graph = navGraph
     }
 
     override fun goToAntherFragment(lat: Double, lon: Double) {
@@ -138,5 +142,12 @@ class HomeActivity : AppCompatActivity() ,ICommunicator{
 
     }
 
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (toggle.onOptionsItemSelected(item)) {
+            return true
+        }
+        return super.onOptionsItemSelected(item)
+    }
 
 }
