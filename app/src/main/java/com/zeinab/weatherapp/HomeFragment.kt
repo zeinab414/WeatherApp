@@ -284,7 +284,7 @@ companion object {
             latitude = lastLocation.latitude
             longtitude = lastLocation.longitude
             Toast.makeText(requireContext(),
-                "You Last Location is : Long: " + longtitude + " , Lat: " + latitude + "," + getCityName(
+                "Long: " + longtitude + " , Lat: " + latitude + "," + getCityName(
                     lastLocation.latitude,
                     lastLocation.longitude),
                 Toast.LENGTH_LONG).show()
@@ -297,12 +297,12 @@ companion object {
 
     private fun getCityName(lat: Double, long: Double): String {
         var cityName: String = ""
-        var countryName = ""
+
         var geoCoder = Geocoder(requireContext(), Locale.getDefault())
         var Adress = geoCoder.getFromLocation(lat, long, 3)
 
         cityName = Adress.get(0).adminArea
-        //     countryName = Adress.get(0).countryName
+
 
         return cityName
     }
@@ -360,8 +360,7 @@ companion object {
             viewModel.getAllWeather()
             //Observe exposed data of viewModel
             viewModel.onlineWeather.observe(this) { weathers ->
-                Log.i("TAG", "onChanged: ")
-                Log.i("TAG", "onCreate: ${weathers.toString()}")
+
                 txtDate.text = allDate
                 txtTime.text = allTime
                 if (sharedPreferences.getString("weatherTemperature", "") == "Celsius"

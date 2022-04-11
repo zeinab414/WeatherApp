@@ -17,7 +17,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@drawable/gradient_bg">
 
             <ImageView
                 android:id="@+id/deleteImg"
@@ -30,6 +31,7 @@
                 app:srcCompat="@drawable/ic_baseline_delete_24" />
 
             <TextView
+                android:textColor="@color/white"
                 android:id="@+id/txtFavCountry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

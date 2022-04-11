@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     >
 
 
@@ -12,8 +13,10 @@
         android:layout_margin="10dp"
         app:cardCornerRadius="30dp"
         android:id="@+id/dayCardView"
+       android:background="@drawable/gradient_bg"
         >
         <LinearLayout
+            android:background="@drawable/gradient_bg"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal"
@@ -28,14 +31,17 @@
                 android:layout_marginLeft="20dp"
                 android:layout_weight="1"
                 android:text="@string/DayName"
-
+android:textColor="@color/white"
                 android:textSize="15dp" />
+
             <ImageView
                 android:id="@+id/dayCloudImg"
                 android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="20dp"
+                android:layout_height="35dp"
+
                 android:layout_gravity="center"
+                android:layout_weight="1"
+
                 app:srcCompat="@drawable/gauge" />
 
             <TextView
@@ -45,7 +51,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="@string/Status"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:textColor="@color/white"/>
 
             <TextView
                 android:id="@+id/txtDayTemp"
@@ -54,7 +61,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:text="@string/temperature"
-                android:textSize="15dp" />
+                android:textSize="15dp"
+                android:textColor="@color/white"/>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MakeAlertFragment"
-    android:background="@color/purple_500">
+    android:background="@color/purple_700">
 
 
 
@@ -22,16 +22,19 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
+                android:background="@drawable/gradient_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
+                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:text="FROM"
                     android:textSize="25dp"/>
                 <TextView
+                    android:textColor="@color/white"
                     android:id="@+id/txtStartTimeAlert"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -40,6 +43,7 @@
                     android:textSize="20dp"
                     android:layout_marginTop="10dp"/>
                 <TextView
+                    android:textColor="@color/white"
                     android:id="@+id/txtStartDateAlert"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -62,16 +66,19 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <LinearLayout
+                android:background="@drawable/gradient_bg"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
                 <TextView
+                    android:textColor="@color/white"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     android:text="TO"
                     android:textSize="25dp"/>
                 <TextView
+                    android:textColor="@color/white"
                     android:id="@+id/txtEndTimeAlert"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -80,6 +87,7 @@
                     android:textSize="20dp"
                     android:layout_marginTop="10dp"/>
                 <TextView
+                    android:textColor="@color/white"
                     android:id="@+id/txtEndDateAlert"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -91,11 +99,13 @@
         </androidx.cardview.widget.CardView>
 
         <Button
+
             android:id="@+id/btnSaveAlert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="20dp"
             android:text="@string/save"
+            android:textColor="@color/white"
 
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

@@ -152,7 +152,7 @@ class MyMapActivity : AppCompatActivity(), OnMapReadyCallback {
     }
     override fun onStop() {
         super.onStop()
-        if(lat!=0.0 && lon!=0.0) {
+        if(lat!=0.0 && lon!=0.0 && HomeActivity.goToAntherFragmement==4) {
             HomeFragment.sharedPreferences.edit().putString("latitude", lat.toString()).commit()
             HomeFragment.sharedPreferences.edit().putString("longtitude", lon.toString()).commit()
 

@@ -9,10 +9,26 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-       var splash: Button=findViewById(R.id.splash);
-        splash.setOnClickListener {
-            val i = Intent(this@MainActivity, HomeActivity::class.java)
-            startActivity(i)
+
+        val splashScreenStarter: Thread = object : Thread() {
+            override fun run() {
+                try {
+                    var delay = 0
+                    while (delay < 2000) {
+                        sleep(150)
+                        delay = delay + 100
+                    }
+
+
+                        startActivity(Intent(this@MainActivity, HomeActivity::class.java))
+
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                } finally {
+                    finish()
+                }
+            }
         }
+        splashScreenStarter.start()
     }
 }

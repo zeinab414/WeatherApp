@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ShowFavInfoFragment"
     android:orientation="vertical"
-    android:background="#ffffff">
+    android:background="@color/purple_700">
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
@@ -16,10 +16,12 @@
         app:cardCornerRadius="30dp"
         >
         <LinearLayout
+            android:background="@drawable/gradient_bg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/governorate"
@@ -27,6 +29,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textSize="15dp"/>
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/date"
@@ -34,6 +37,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textSize="10dp"/>
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/time"
@@ -41,6 +45,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textSize="15dp"/>
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sky"
@@ -48,6 +53,7 @@
                 android:layout_gravity="center_horizontal"
                 android:textSize="15dp"/>
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/temperature"
@@ -88,7 +94,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:weightSum="2"
-                    android:layout_marginVertical="20dp"
+                   android:background="@drawable/gradient_bg"
                     >
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -110,12 +116,14 @@
                                 android:layout_weight="1"
                                 app:srcCompat="@drawable/gauge" />
                             <TextView
+                                android:textColor="@color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:layout_weight="1"
                                 android:id="@+id/txtFavPressure"
                                 android:text="1080"/>
                             <TextView
+                                android:textColor="@color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:layout_weight="1"
@@ -135,12 +143,14 @@
                                 android:layout_weight="1"
                                 app:srcCompat="@drawable/humidity" />
                             <TextView
+                                android:textColor="@color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:layout_weight="1"
                                 android:id="@+id/txtFavHumidity"
                                 android:text="77%"/>
                             <TextView
+                                android:textColor="@color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:layout_weight="1"
@@ -160,12 +170,14 @@
                                 android:layout_weight="1"
                                 app:srcCompat="@drawable/wind" />
                             <TextView
+                                android:textColor="@color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:layout_weight="1"
                                 android:text="2.06"
                                 android:id="@+id/txtFavWind"/>
                             <TextView
+                                android:textColor="@color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:layout_weight="1"
@@ -196,6 +208,7 @@
                                 android:layout_weight="1"
                                 app:srcCompat="@drawable/cloud" />
                             <TextView
+                                android:textColor="@color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:layout_weight="1"
@@ -203,6 +216,7 @@
                                 android:id="@+id/txtFavCloud"/>
 
                             <TextView
+                                android:textColor="@color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="9dp"
                                 android:layout_weight="1"
@@ -222,12 +236,14 @@
                                 android:layout_weight="1"
                                 app:srcCompat="@drawable/ultra" />
                             <TextView
+                                android:textColor="@color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:layout_weight="1"
                                 android:text="0.0"
                                 android:id="@+id/txtFavUltra"/>
                             <TextView
+                                android:textColor="@color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:layout_weight="1"
@@ -247,12 +263,14 @@
                                 android:layout_weight="1"
                                 app:srcCompat="@drawable/visibility" />
                             <TextView
+                                android:textColor="@color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:layout_weight="1"
                                 android:text="6000"
                                 android:id="@+id/txtFavVisibility"/>
                             <TextView
+                                android:textColor="@color/white"
                                 android:layout_width="wrap_content"
                                 android:layout_height="20dp"
                                 android:layout_weight="1"

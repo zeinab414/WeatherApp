@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:background="@color/teal_200"
+    android:background="@color/purple_700"
     >
 
 
@@ -21,10 +21,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
        <LinearLayout
+           android:background="@drawable/gradient_bg"
            android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:orientation="vertical">
            <TextView
+               android:textColor="@color/white"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:textAlignment="center"
@@ -35,9 +37,11 @@
                android:layout_height="wrap_content"
                android:textAlignment="center"
                android:text="@string/startTime"
+               android:textColor="@color/white"
                android:textSize="20dp"
                android:layout_marginTop="10dp"/>
            <TextView
+               android:textColor="@color/white"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
                android:textAlignment="center"
@@ -61,14 +65,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:background="@drawable/gradient_bg">
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
                 android:text="TO"
                 android:textSize="25dp"/>
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
@@ -76,6 +83,7 @@
                 android:textSize="20dp"
                 android:layout_marginTop="10dp"/>
             <TextView
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAlignment="center"
@@ -98,6 +106,9 @@
         app:layout_constraintTop_toBottomOf="@+id/btnChooseLocation" />
 
     <Button
+
+        android:alpha="0.4"
+        android:textColor="@color/white"
         android:id="@+id/btnChooseLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
